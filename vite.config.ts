@@ -11,47 +11,38 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   
   return {
-  // Usar ruta relativa en producción, absoluta en desarrollo
-  base: isProduction ? './' : '/',
-  plugins: [react()],
-  // Configuración para manejar correctamente las rutas en producción
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-  build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    emptyOutDir: true,
-    sourcemap: false,
-    minify: 'esbuild',
-    cssCodeSplit: true,
-    write: true,
-    // Configuración para asegurar que los módulos se carguen correctamente
-    modulePreload: {
-      polyfill: false,
-    },
-    // Desactivar la generación de manifiesto de assets
-    manifest: false,
-    // Configuración para manejar correctamente las rutas base
-    base: '/',
-    // Configuración de assets y chunks
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          react: ['react', 'react-dom'],
-          vendor: ['react-icons', 'recharts'],
-        },
-        entryFileNames: 'assets/[name].[hash].js',
-        chunkFileNames: 'assets/[name].[hash].js',
-        assetFileNames: 'assets/[name].[hash][extname]',
+    // Usar ruta relativa en producción, absoluta en desarrollo
+    base: isProduction ? './' : '/',
+    plugins: [react()],
+    // Configuración para manejar correctamente las rutas en producción
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
       },
     },
-    // Asegurar que los módulos se sirvan con el tipo MIME correcto
-    assetsInlineLimit: 0,
-    // Forzar la inclusión de hashes en los nombres de archivo
-    chunkSizeWarningLimit: 1000,
+    build: {
+      outDir: 'dist',
+      assetsDir: 'assets',
+      emptyOutDir: true,
+      sourcemap: false,
+      minify: 'esbuild',
+      cssCodeSplit: true,
+      manifest: true,
+      // Asegurar que los módulos se sirvan con el tipo MIME correcto
+      assetsInlineLimit: 0,
+      // Forzar la inclusión de hashes en los nombres de archivo
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            react: ['react', 'react-dom'],
+            vendor: ['react-icons', 'recharts'],
+          },
+          entryFileNames: 'assets/[name].[hash].js',
+          chunkFileNames: 'assets/[name].[hash].js',
+          assetFileNames: 'assets/[name].[hash][extname]',
+        },
+      },
   },
   server: {
     port: 3000,
