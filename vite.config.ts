@@ -11,8 +11,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   
   return {
-    // Usar ruta relativa en producción
-    base: './',
+    base: '/',
     plugins: [react()],
     resolve: {
       alias: {
