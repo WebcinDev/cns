@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   
   return {
-    base: '/',
+    base: './',
     plugins: [react()],
     resolve: {
       alias: {
@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => {
       minify: 'esbuild',
       cssCodeSplit: true,
       manifest: false,
-      assetsInlineLimit: 0,
+      assetsInlineLimit: 4096,
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
@@ -34,11 +34,11 @@ export default defineConfig(({ mode }) => {
             react: ['react', 'react-dom'],
             vendor: ['react-icons', 'recharts'],
           },
-          entryFileNames: 'assets/[name].js',
-          chunkFileNames: 'assets/[name].js',
-          assetFileNames: 'assets/[name][extname]',
-        },
-      },
+          entryFileNames: 'assets/[name]-[hash].js',
+          chunkFileNames: 'assets/[name]-[hash].js',
+          assetFileNames: 'assets/[name]-[hash][extname]'
+        }
+      }
   },
   server: {
     port: 3000,
