@@ -43,10 +43,19 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, theme, onToggl
             <img 
               className={`w-auto ${theme === 'light' ? 'h-12' : 'h-16'}`} 
               src={theme === 'light' 
-                ? "https://www.webcincodev.com/blog/wp-content/uploads/2025/09/logoclaro.png"
-                : "https://www.webcincodev.com/blog/wp-content/uploads/2025/09/logo-dark.png"
+                ? "/logo-light.png"
+                : "/logo-dark.png"
               } 
               alt="Logo"
+              onError={(e) => {
+                // Si falla la carga, intentar con la URL externa
+                const target = e.target as HTMLImageElement;
+                if (theme === 'light') {
+                  target.src = "https://www.webcincodev.com/blog/wp-content/uploads/2025/09/logoclaro.png";
+                } else {
+                  target.src = "https://www.webcincodev.com/blog/wp-content/uploads/2025/09/logo-dark.png";
+                }
+              }}
             />
           </div>
           

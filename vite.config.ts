@@ -11,13 +11,14 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   
   return {
-    base: './',
+    base: '/',
     plugins: [react()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
       },
     },
+    publicDir: 'public',
     build: {
       outDir: 'dist',
       assetsDir: 'assets',
@@ -26,7 +27,7 @@ export default defineConfig(({ mode }) => {
       minify: 'esbuild',
       cssCodeSplit: true,
       manifest: false,
-      assetsInlineLimit: 4096,
+      assetsInlineLimit: 0, // Forzar que los archivos se copien en lugar de incrustarse
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
