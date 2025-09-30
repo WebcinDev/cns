@@ -3,8 +3,12 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 // https://vitejs.dev/config/
+// Obtener el modo de ejecución (development o production)
+const isProduction = process.env.NODE_ENV === 'production';
+
 export default defineConfig({
-  base: '/',
+  // Usar ruta relativa en producción, absoluta en desarrollo
+  base: isProduction ? './' : '/',
   plugins: [react()],
   resolve: {
     alias: {
@@ -18,6 +22,8 @@ export default defineConfig({
     sourcemap: false,
     minify: 'esbuild',
     cssCodeSplit: true,
+    // Asegurar que los assets se carguen correctamente
+    assetsInlineLimit: 0,
     rollupOptions: {
       output: {
         manualChunks: {
