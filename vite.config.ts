@@ -25,22 +25,33 @@ export default defineConfig(({ mode }) => {
     assetsDir: 'assets',
     emptyOutDir: true,
     sourcemap: false,
-    minify: false,
+    minify: 'esbuild',
     cssCodeSplit: true,
     write: true,
-    // Asegurar que los assets se carguen correctamente
-    assetsInlineLimit: 0,
+    // Configuración para asegurar que los módulos se carguen correctamente
+    modulePreload: {
+      polyfill: false,
+    },
+    // Desactivar la generación de manifiesto de assets
+    manifest: false,
+    // Configuración para manejar correctamente las rutas base
+    base: '/',
+    // Configuración de assets y chunks
     rollupOptions: {
       output: {
         manualChunks: {
           react: ['react', 'react-dom'],
           vendor: ['react-icons', 'recharts'],
         },
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash][extname]',
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash][extname]',
       },
     },
+    // Asegurar que los módulos se sirvan con el tipo MIME correcto
+    assetsInlineLimit: 0,
+    // Forzar la inclusión de hashes en los nombres de archivo
+    chunkSizeWarningLimit: 1000,
   },
   server: {
     port: 3000,
