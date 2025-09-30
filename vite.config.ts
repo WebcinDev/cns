@@ -11,10 +11,9 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   
   return {
-    // Usar ruta relativa en producción, absoluta en desarrollo
-    base: isProduction ? './' : '/',
+    // Usar ruta relativa en producción
+    base: './',
     plugins: [react()],
-    // Configuración para manejar correctamente las rutas en producción
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
@@ -27,10 +26,8 @@ export default defineConfig(({ mode }) => {
       sourcemap: false,
       minify: 'esbuild',
       cssCodeSplit: true,
-      manifest: true,
-      // Asegurar que los módulos se sirvan con el tipo MIME correcto
+      manifest: false,
       assetsInlineLimit: 0,
-      // Forzar la inclusión de hashes en los nombres de archivo
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
@@ -38,9 +35,9 @@ export default defineConfig(({ mode }) => {
             react: ['react', 'react-dom'],
             vendor: ['react-icons', 'recharts'],
           },
-          entryFileNames: 'assets/[name].[hash].js',
-          chunkFileNames: 'assets/[name].[hash].js',
-          assetFileNames: 'assets/[name].[hash][extname]',
+          entryFileNames: 'assets/[name].js',
+          chunkFileNames: 'assets/[name].js',
+          assetFileNames: 'assets/[name][extname]',
         },
       },
   },
